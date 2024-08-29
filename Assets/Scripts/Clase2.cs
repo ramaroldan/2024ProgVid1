@@ -19,7 +19,7 @@ public class Clase2 : MonoBehaviour
     [SerializeField] private Vector3 rotationDir;
     [SerializeField] private float rotationSpeed;
 
-    [SerializeField] private Bullet;
+    //[SerializeField] private Bullet;
 
     private void Awake()
     {
@@ -48,13 +48,13 @@ public class Clase2 : MonoBehaviour
     {
         string info;
         info = characterName;
-        info = info + age;
+        info += age;
         return info;
     }
 
     private void ComplexOperation()
     {
-        float complexNumber = ((2 + 5) / 4.5f) * 1.21f;
+        //float complexNumber = ((2 + 5) / 4.5f) * 1.21f;
         int number = 5;
         number += 2;
     }
@@ -111,7 +111,7 @@ public class Clase2 : MonoBehaviour
     private void Shoot()
     {
         //hacer aparecer un prefab de bala
-        Instantiate(bulletPrefab, transform.position, transform.rotation);
+        //Instantiate(bulletPrefab, transform.position, transform.rotation);
         //moverlo
 
     }
