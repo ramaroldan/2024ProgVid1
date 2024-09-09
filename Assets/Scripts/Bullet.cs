@@ -1,24 +1,35 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-namespace DefaultNamespace
+public class Bullet : MonoBehaviour
 {
-    public class Bullet : MonoBehaviour
+    [SerializeField] private float movementSpeed; //Velocidad de la bala
+    [SerializeField] private float timeToDestroy; //destrucción de la bala
+
+    private void Awake()
     {
-        [SerializeField] private float movementSpeed;
+        //Le doy X segundos para destruirse la bala
+        Destroy(gameObject, timeToDestroy);
+    }
 
-        private void Update()
-        {
-            Move();
-        }
+    private void Update()
+    {
+        //Le doy X segundos para destruirse la bala
+        //timeToDestroy -= Time.deltaTime;
+        //if (timeToDestroy < 0)
+        //{
+        //    //Destruir la bala
+        //    Destroy(gameObject);
+        //}
 
-        private void Move()
-        {
-            transform.position += movementSpeed * transform.forward;
-        }
+        Move();
+    }
 
+    private void Move()
+    {
+        //forward = adelante del objeto //trnasform.right //transform.up
+        transform.position += movementSpeed * transform.forward;
     }
 }
-
-

@@ -5,21 +5,21 @@ using UnityEngine;
 
 public class Clase2 : MonoBehaviour
 {
-    [SerializeField] private bool isAlive;
-    [SerializeField] private int age;
-    [SerializeField] private float speed;
-    [SerializeField] private float health;
-    [SerializeField] private float maxHealth;
-    [SerializeField] private double gravity;
-    [SerializeField] private string characterName;
-    [SerializeField] private Vector3 initialPosition;
-    [SerializeField] private Vector3 movementDirection;
-    [SerializeField] private Vector3 scalingDir;
-    [SerializeField] private float scalingVelociy;
-    [SerializeField] private Vector3 rotationDir;
-    [SerializeField] private float rotationSpeed;
+    private bool isAlive; //esta vivo?
+    [SerializeField] private int age; //edad
+    [SerializeField] private float speed; //velocidad +der -izq
+    [SerializeField] private float health; //vida
+    [SerializeField] private float maxHealth; //vida maxima
+    [SerializeField] private double gravity; //gravedad
+    [SerializeField] private string characterName; //nombre personaje
+    [SerializeField] private Vector3 initialPosition; //posicion inicial
+    [SerializeField] private Vector3 movementDirection; //Direccion en la que se mueva
+    [SerializeField] private Vector3 scalingDir; //direccion de escala
+    [SerializeField] private float scalingVelociy; //velocidad de escala
+    [SerializeField] private Vector3 rotationDir; //direccion de rotacion
+    [SerializeField] private float rotationSpeed; //velocidad de rotacion
 
-    //[SerializeField] private Bullet;
+    [SerializeField] private Bullet bulletPrefab;
 
     private void Awake()
     {
@@ -37,11 +37,12 @@ public class Clase2 : MonoBehaviour
     {
         Debug.Log(message: "Update");
         Move();
+        CheckDead();
     }
 
     private void Hello()
     {
-        Debug.Log("Hello" + GetInfo());
+        Debug.Log(message:"Hello" + GetInfo());
     }
 
     private string GetInfo()
@@ -83,35 +84,66 @@ public class Clase2 : MonoBehaviour
 
     private void CheckDead()
     {
-        //chequear si el pj está vivo /**/
+        //chequear si el pj está vivo, tiene mas de 0 de vida /**/
         isAlive = health > 0;
         bool isDead = !isAlive; //cambia el valor del booleano
+
+        //if (isAlive)
+        //{
+        //    Debug.Log(message:"It´s a alive");
+        //}
+        //else
+        //{
+        //    Debug.Log(message: "It´s dead");
+        //}
+
+        //Si el personaje esta vivo imprimo "Its a alive"
+        //Si el personaje no esta vivo y tiene una velocidad >0, pongo su velocidad en 0
+        //si el personaje no esta vivo y su velocidad es =<0, no hago nada
+        if (isAlive)
+        {
+            Debug.Log(message:"It´s a alive");
+        }
+        else if (speed>0){
+            speed = 0;
+        }
+        else
+        {
+            Debug.Log(message: "It´s dead");
+        }
+
     }
 
     //metodo para mover un objeto a una dirección
     private void Move()
     {
-       /* //Agarrar la posicion actual del personaje
-          Vector3 position = transform.position;
-          //Sumarle una cantidad de movimiento
-          position = position + movementDirection*speed;
-          //Escribir de vuelta la posición
-          transform.position = position; 
-       */
+        /* //Agarrar la posicion actual del personaje
+           Vector3 position = transform.position;
+           //Sumarle una cantidad de movimiento
+           position = position + movementDirection*speed;
+           //Escribir de vuelta la posición
+           transform.position = position; 
+        */
 
         //todo en una sola linea
-        transform.position += movementDirection*speed;
+        //transform.position += movementDirection*speed;
 
-        //mover, lotar y escalar
-        transform.Translate(x:speed, y:0, z:0);
-        transform.localScale += scalingDir * scalingVelociy;
-        transform.Rotate(rotationDir, rotationSpeed);
+        //si esta vivo y la velocidad es mayor a 0
+        if (isAlive && speed >0)
+        {
+            //mover, lotar y escalar
+            transform.Translate(movementDirection * speed); //accedemos al transform y movemos el objeto 
+            transform.localScale += scalingDir * scalingVelociy;
+            transform.Rotate(rotationDir, rotationSpeed);
+        }
+
+        //transform.Translate(x:speed, y:0, z:0);
     }
 
     private void Shoot()
     {
         //hacer aparecer un prefab de bala
-        //Instantiate(bulletPrefab, transform.position, transform.rotation);
+        Instantiate(bulletPrefab, transform.position, transform.rotation);
         //moverlo
 
     }
